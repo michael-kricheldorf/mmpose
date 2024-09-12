@@ -1,6 +1,6 @@
-ARG PYTORCH="1.8.1"
-ARG CUDA="10.2"
-ARG CUDNN="7"
+ARG PYTORCH="2.4.1"
+ARG CUDA="11.8"
+ARG CUDNN="9"
 
 FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
 
@@ -22,7 +22,7 @@ RUN pip install xtcocotools
 
 # Install MMEngine and MMCV
 RUN pip install openmim
-RUN mim install mmengine "mmcv>=2.0.0"
+RUN mim install mmengine "mmcv==2.1.0"
 
 # Install MMPose
 RUN conda clean --all
@@ -30,5 +30,8 @@ RUN git clone https://github.com/open-mmlab/mmpose.git /mmpose
 WORKDIR /mmpose
 RUN git checkout main
 ENV FORCE_CUDA="1"
-RUN pip install -r requirements/build.txt
+RUN pip install "numpy<1.26.4"
+RUN pip install torch>=1.8
+RUN pip install json-tricks
+RUN pip install mmdet
 RUN pip install --no-cache-dir -e .
