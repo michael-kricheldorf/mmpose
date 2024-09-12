@@ -26,12 +26,13 @@ RUN mim install mmengine "mmcv==2.1.0"
 
 # Install MMPose
 RUN conda clean --all
-RUN git clone https://github.com/open-mmlab/mmpose.git /mmpose
+RUN git clone https://github.com/michael-kricheldorf/mmpose.git /mmpose
 WORKDIR /mmpose
-RUN git checkout main
+#RUN git checkout main
 ENV FORCE_CUDA="1"
-RUN pip install "numpy<1.26.4"
-RUN pip install torch>=1.8
+RUN pip install "numpy<2"
+RUN pip install "torch>=1.8"
 RUN pip install json-tricks
 RUN pip install mmdet
 RUN pip install --no-cache-dir -e .
+WORKDIR /mmpose/projects/rtmpose3d
