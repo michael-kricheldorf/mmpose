@@ -130,7 +130,7 @@ docs/**/modelzoo.md
 
 # Pytorch
 *.pth
-.zip
+*.zip
 
 *.DS_Store
 
