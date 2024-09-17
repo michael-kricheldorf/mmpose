@@ -130,5 +130,9 @@ docs/**/modelzoo.md
 
 # Pytorch
 *.pth
+.zip
 
 *.DS_Store
+
+# large files dir
+projects/rtmpose3d/mount/*

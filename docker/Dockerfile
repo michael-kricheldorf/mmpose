@@ -1,6 +1,6 @@
-ARG PYTORCH="2.4.1"
-ARG CUDA="11.8"
-ARG CUDNN="9"
+ARG PYTORCH="2.0.0"
+ARG CUDA="11.7"
+ARG CUDNN="8"
 
 FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
 
@@ -30,6 +30,7 @@ RUN git clone https://github.com/michael-kricheldorf/mmpose.git /mmpose
 WORKDIR /mmpose
 RUN git checkout main
 ENV FORCE_CUDA="1"
+#ENV MMCV_WITH_OPS=1
 RUN pip install "numpy<2"
 RUN pip install "torch>=1.8"
 RUN pip install json-tricks
