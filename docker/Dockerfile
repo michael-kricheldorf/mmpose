@@ -12,7 +12,7 @@ ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub
 
-RUN apt-get update && apt-get install -y git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 libgl1-mesa-glx\
+RUN apt-get update && apt-get install -y git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 libgl1-mesa-glx libgtk2.0-dev pkg-config\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,6 +27,8 @@ RUN mim install mmengine "mmcv==2.1.0"
 # Install MMPose
 RUN conda clean --all
 RUN git clone https://github.com/michael-kricheldorf/mmpose.git /mmpose
+RUN git clone https://github.com/michael-kricheldorf/roboflow-sports.git /sports
+RUN pip install /sports
 WORKDIR /mmpose
 RUN git checkout main
 ENV FORCE_CUDA="1"
@@ -35,5 +37,12 @@ RUN pip install "numpy<2"
 RUN pip install "torch>=1.8"
 RUN pip install json-tricks
 RUN pip install mmdet
+
+# inserted due to an error, from https://stackoverflow.com/questions/67120450/error-2unspecified-error-the-function-is-not-implemented-rebuild-the-libra
+#RUN pip install "opencv-python-headless==4.6.0.66"
+
 RUN pip install --no-cache-dir -e .
+
+RUN pip uninstall opencv-python -y
+
 WORKDIR /mmpose/projects/rtmpose3d
